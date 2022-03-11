@@ -3,10 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import multiprocessing as mp
 import os
-import plotly.express as px
 import plotly.graph_objects as go
-import pandas as pd
-
 
 ###
 #   Global variables
@@ -40,7 +37,7 @@ def check_sequence(modulus: int) -> (bool, int, int):
         ###
         # optimizes the loop by skipping the rest of the loop if the sequence is found
         # this is because the sequence is found when the remainders array is empty
-        # commented out because this case is rare in the long run
+        # commented out because this case is rare in the long run,
         # and it is preferable to keep the count consistent for the graph
         ###
         # if not remainders.size:
@@ -63,9 +60,10 @@ if __name__ == '__main__' and not os.path.exists(f"{data_dir}/contains_x_{loop_c
     contains_all = 0
     doesnt_contain_all = 0
     pool = mp.Pool(processes=mp.cpu_count())
-    for i, mod, ct in tqdm(pool.imap_unordered(check_sequence, np.arange(range_start, range_end, dtype=int)), total=loop_count):
-        contains_y[mod] = i*ct
-        doesnt_contain_y[mod] = (not i)*ct
+    for i, mod, ct in tqdm(pool.imap_unordered(
+            check_sequence, np.arange(start=range_start, end=range_end, dtype=int)), total=loop_count):
+        contains_y[mod] = i * ct
+        doesnt_contain_y[mod] = (not i) * ct
         contains_all += i
         doesnt_contain_all += (not i)
     pool.close()
@@ -83,7 +81,8 @@ if __name__ == '__main__' and not os.path.exists(f"{data_dir}/contains_x_{loop_c
         np.save(f'{data_dir}/doesnt_contain_y_{loop_count}.npy', doesnt_contain_y)
         np.save(f'{data_dir}/contains_x_{loop_count}.npy', contains_x)
 
-    print(f"{(contains_all+1)}/{contains_all+doesnt_contain_all+1} = {(contains_all+1)/(contains_all + doesnt_contain_all+1)*100}% of the moduli contain every remainder.")
+    print(f"{(contains_all + 1)}/{contains_all + doesnt_contain_all + 1} = "
+          f"{(contains_all + 1) / (contains_all + doesnt_contain_all + 1) * 100}% of moduli contain every remainder.")
 
 if __name__ == '__main__':
     contains_x = np.load(f'{data_dir}/contains_x_{loop_count}.npy')
@@ -106,7 +105,8 @@ if __name__ == '__main__':
             size=10, symbol="circle"), name="Doesn't contain every remainder"))
         fig.add_trace(go.Scatter(x=contains_x, y=contains_y, mode='markers', marker=dict(
             size=10, symbol="star"), name="Contains every remainder"))
-        fig.update_layout(template="plotly_white", title="Fibonacci Modulus Sequence Periods", xaxis_title="Modulus", yaxis_title="Sequence Period")
+        fig.update_layout(template="plotly_white", title="Fibonacci Modulus Sequence Periods",
+                          xaxis_title="Modulus", yaxis_title="Sequence Period")
         # fig.show()
         if not os.path.exists(figures_dir):
             os.mkdir(figures_dir)
