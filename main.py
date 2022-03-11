@@ -3,7 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import multiprocessing as mp
 import os.path
-import plotly.graph_objects as go
+import plotly.express as px
+
 
 ###
 #   Global variables
@@ -77,11 +78,10 @@ if __name__ == '__main__' and not os.path.exists(f"{data_dir}/contains_x_{loop_c
     print(f"{(contains_all+1)}/{contains_all+doesnt_contain_all+1} = {(contains_all+1)/(contains_all + doesnt_contain_all+1)*100}% of the moduli contain every remainder.")
 
 if __name__ == '__main__':
-    if os.path.exists(f'{data_dir}/contains_x_{loop_count}.npy'):
-        contains_x = np.load(f'{data_dir}/contains_x_{loop_count}.npy')
-        contains_y = np.load(f'{data_dir}/contains_y_{loop_count}.npy')
-        doesnt_contain_x = np.load(f'{data_dir}/doesnt_contain_x_{loop_count}.npy')
-        doesnt_contain_y = np.load(f'{data_dir}/doesnt_contain_y_{loop_count}.npy')
+    contains_x = np.load(f'{data_dir}/contains_x_{loop_count}.npy')
+    contains_y = np.load(f'{data_dir}/contains_y_{loop_count}.npy')
+    doesnt_contain_x = np.load(f'{data_dir}/doesnt_contain_x_{loop_count}.npy')
+    doesnt_contain_y = np.load(f'{data_dir}/doesnt_contain_y_{loop_count}.npy')
 
     plt.plot(doesnt_contain_x, doesnt_contain_y, 'yo', label="Doesn't contain every remainder")
     plt.plot(contains_x, contains_y, 'kx', label="Contains every remainder")
