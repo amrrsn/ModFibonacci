@@ -3,15 +3,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 import multiprocessing as mp
 import os.path
+import plotly.graph_objects as go
+
+###
+#   Global variables
+#   ----------------
+#   - range_start: must be an integer >= 2
+#   - range_end: must be an integer
+#   - loop_count: do not change
+#   - data_dir: directory where data is stored, should be a string
+###
 
 range_start = 2
 range_end = 1000
 loop_count = range_end - range_start
-contains_x = np.arange(stop=loop_count, dtype=int)
-contains_y = np.zeros(loop_count, dtype=int)
-doesnt_contain_x = np.arange(stop=loop_count, dtype=int)
-doesnt_contain_y = np.zeros(loop_count, dtype=int)
-
 data_dir = f'data/{loop_count}/'
 
 
@@ -43,6 +48,11 @@ def check_sequence(modulus: int) -> (bool, int, int):
 
 
 if __name__ == '__main__' and not os.path.exists(f"{data_dir}/contains_x_{loop_count}.npy"):
+    contains_x = np.arange(stop=loop_count, dtype=int)
+    contains_y = np.zeros(loop_count, dtype=int)
+    doesnt_contain_x = np.arange(stop=loop_count, dtype=int)
+    doesnt_contain_y = np.zeros(loop_count, dtype=int)
+
     contains_all = 0
     doesnt_contain_all = 0
     pool = mp.Pool(processes=mp.cpu_count())
