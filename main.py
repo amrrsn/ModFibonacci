@@ -2,7 +2,7 @@ from tqdm import tqdm
 import numpy as np
 import matplotlib.pyplot as plt
 import multiprocessing as mp
-import os.path
+import os
 import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
@@ -18,9 +18,9 @@ import pandas as pd
 ###
 
 range_start = 2
-range_end = 10000
+range_end = 10
 loop_count = range_end - range_start
-data_dir = f'data/{loop_count}/'
+data_dir = f'data/{loop_count}'
 
 
 def check_sequence(modulus: int) -> (bool, int, int):
@@ -71,6 +71,8 @@ if __name__ == '__main__' and not os.path.exists(f"{data_dir}/contains_x_{loop_c
     doesnt_contain_x = np.delete(doesnt_contain_x, np.where(doesnt_contain_y == 0))
     doesnt_contain_y = np.delete(doesnt_contain_y, np.where(doesnt_contain_y == 0))
 
+    if not os.path.exists(data_dir):
+        os.mkdir(data_dir)
     if not os.path.exists(f'{data_dir}/contains_x_{loop_count}.npy'):
         np.save(f'{data_dir}/contains_y_{loop_count}.npy', contains_y)
         np.save(f'{data_dir}/doesnt_contain_x_{loop_count}.npy', doesnt_contain_x)
