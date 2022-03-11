@@ -15,13 +15,15 @@ import pandas as pd
 #   - range_end: must be an integer
 #   - loop_count: do not change
 #   - data_dir: directory where data is stored, should be a string
+#   - figures_dir: directory where figures are stored, should be a string
 #   - plot_type: plotly or matplotlib
 ###
 
 range_start = 2
-range_end = 100
+range_end = 1000
 loop_count = range_end - range_start
 data_dir = f'data/{loop_count}'
+figures_dir = f'figures/{loop_count}'
 plot_type = 'plotly'
 
 
@@ -100,7 +102,12 @@ if __name__ == '__main__':
 
     if plot_type == 'plotly':
         fig = go.Figure()
-        fig.add_trace(go.Scatter(x=contains_x, y=contains_y, name='Contains'))
-        fig.add_trace(go.Scatter(x=doesnt_contain_x, y=doesnt_contain_y, name='Does not contain'))
-        fig.update_layout(title="Fibonacci Modulus Sequence Periods", xaxis_title="Modulus", yaxis_title="Sequence Period")
-        fig.show()
+        fig.add_trace(go.Scatter(x=doesnt_contain_x, y=doesnt_contain_y, mode='markers', marker=dict(
+            size=10, symbol="circle"), name="Doesn't contain every remainder"))
+        fig.add_trace(go.Scatter(x=contains_x, y=contains_y, mode='markers', marker=dict(
+            size=10, symbol="star"), name="Contains every remainder"))
+        fig.update_layout(template="plotly_white", title="Fibonacci Modulus Sequence Periods", xaxis_title="Modulus", yaxis_title="Sequence Period")
+        # fig.show()
+        if not os.path.exists(figures_dir):
+            os.mkdir(figures_dir)
+        fig.write_html(f'{figures_dir}/fibonacci_modulus_periods.html')
