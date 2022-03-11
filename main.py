@@ -15,18 +15,20 @@ import pandas as pd
 #   - range_end: must be an integer
 #   - loop_count: do not change
 #   - data_dir: directory where data is stored, should be a string
+#   - plot_type: plotly or matplotlib
 ###
 
 range_start = 2
-range_end = 10
+range_end = 100
 loop_count = range_end - range_start
 data_dir = f'data/{loop_count}'
+plot_type = 'plotly'
 
 
 def check_sequence(modulus: int) -> (bool, int, int):
     remainders = np.arange(stop=modulus, dtype=int)
 
-    count = 2
+    count = 0
     last_digits = [0, 1]
     while True:
         count += 1
@@ -51,17 +53,17 @@ def check_sequence(modulus: int) -> (bool, int, int):
 
 
 if __name__ == '__main__' and not os.path.exists(f"{data_dir}/contains_x_{loop_count}.npy"):
-    contains_x = np.arange(stop=loop_count, dtype=int)
-    contains_y = np.zeros(loop_count, dtype=int)
-    doesnt_contain_x = np.arange(stop=loop_count, dtype=int)
-    doesnt_contain_y = np.zeros(loop_count, dtype=int)
+    contains_x = np.arange(stop=range_end, dtype=int)
+    contains_y = np.zeros(range_end, dtype=int)
+    doesnt_contain_x = np.arange(stop=range_end, dtype=int)
+    doesnt_contain_y = np.zeros(range_end, dtype=int)
 
     contains_all = 0
     doesnt_contain_all = 0
     pool = mp.Pool(processes=mp.cpu_count())
     for i, mod, ct in tqdm(pool.imap_unordered(check_sequence, np.arange(range_start, range_end, dtype=int)), total=loop_count):
-        contains_y[mod - range_start] = i*ct
-        doesnt_contain_y[mod - range_start] = (not i)*ct
+        contains_y[mod] = i*ct
+        doesnt_contain_y[mod] = (not i)*ct
         contains_all += i
         doesnt_contain_all += (not i)
     pool.close()
@@ -87,16 +89,18 @@ if __name__ == '__main__':
     doesnt_contain_x = np.load(f'{data_dir}/doesnt_contain_x_{loop_count}.npy')
     doesnt_contain_y = np.load(f'{data_dir}/doesnt_contain_y_{loop_count}.npy')
 
-    # plt.plot(doesnt_contain_x, doesnt_contain_y, 'yo', label="Doesn't contain every remainder")
-    # plt.plot(contains_x, contains_y, 'kx', label="Contains every remainder")
-    # plt.xlabel("Modulus")
-    # plt.ylabel("Iterations")
-    # plt.legend(fontsize=10)
-    # plt.title("Fibonacci modulus iterations before repeating sequence")
-    # plt.show()
+    if plot_type == 'matplotlib':
+        plt.plot(doesnt_contain_x, doesnt_contain_y, 'yo', label="Doesn't contain every remainder")
+        plt.plot(contains_x, contains_y, 'kx', label="Contains every remainder")
+        plt.xlabel("Modulus")
+        plt.ylabel("Iterations")
+        plt.legend(fontsize=10)
+        plt.title("Fibonacci modulus iterations before repeating sequence")
+        plt.show()
 
-    fig = go.Figure()
-    fig.add_trace(go.Scatter(x=contains_x, y=contains_y, mode='markers', name='Contains every remainder'))
-    fig.add_trace(go.Scatter(x=doesnt_contain_x, y=doesnt_contain_y, mode='markers', name='Doesn\'t contain every remainder'))
-    fig.update_layout(title="Fibonacci modulus iterations before repeating sequence", xaxis_title="Modulus", yaxis_title="Iterations")
-    fig.show()
+    if plot_type == 'plotly':
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=contains_x, y=contains_y, name='Contains'))
+        fig.add_trace(go.Scatter(x=doesnt_contain_x, y=doesnt_contain_y, name='Does not contain'))
+        fig.update_layout(title="Fibonacci Modulus Sequence Periods", xaxis_title="Modulus", yaxis_title="Sequence Period")
+        fig.show()
