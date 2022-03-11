@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import multiprocessing as mp
 import os.path
 import plotly.express as px
+import plotly.graph_objects as go
+import pandas as pd
 
 
 ###
@@ -16,7 +18,7 @@ import plotly.express as px
 ###
 
 range_start = 2
-range_end = 1000
+range_end = 10000
 loop_count = range_end - range_start
 data_dir = f'data/{loop_count}/'
 
@@ -83,10 +85,16 @@ if __name__ == '__main__':
     doesnt_contain_x = np.load(f'{data_dir}/doesnt_contain_x_{loop_count}.npy')
     doesnt_contain_y = np.load(f'{data_dir}/doesnt_contain_y_{loop_count}.npy')
 
-    plt.plot(doesnt_contain_x, doesnt_contain_y, 'yo', label="Doesn't contain every remainder")
-    plt.plot(contains_x, contains_y, 'kx', label="Contains every remainder")
-    plt.xlabel("Modulus")
-    plt.ylabel("Iterations")
-    plt.legend(fontsize=10)
-    plt.title("Fibonacci modulus iterations before repeating sequence")
-    plt.show()
+    # plt.plot(doesnt_contain_x, doesnt_contain_y, 'yo', label="Doesn't contain every remainder")
+    # plt.plot(contains_x, contains_y, 'kx', label="Contains every remainder")
+    # plt.xlabel("Modulus")
+    # plt.ylabel("Iterations")
+    # plt.legend(fontsize=10)
+    # plt.title("Fibonacci modulus iterations before repeating sequence")
+    # plt.show()
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=contains_x, y=contains_y, mode='markers', name='Contains every remainder'))
+    fig.add_trace(go.Scatter(x=doesnt_contain_x, y=doesnt_contain_y, mode='markers', name='Doesn\'t contain every remainder'))
+    fig.update_layout(title="Fibonacci modulus iterations before repeating sequence", xaxis_title="Modulus", yaxis_title="Iterations")
+    fig.show()
