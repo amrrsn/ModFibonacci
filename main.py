@@ -17,7 +17,7 @@ import plotly.graph_objects as go
 ###
 
 range_start = 2
-range_end = 1000
+range_end = 100000
 loop_count = range_end - range_start
 data_dir = f'data/{loop_count}'
 figures_dir = f'figures/{loop_count}'
@@ -61,7 +61,7 @@ if __name__ == '__main__' and not os.path.exists(f"{data_dir}/contains_x_{loop_c
     doesnt_contain_all = 0
     pool = mp.Pool(processes=mp.cpu_count())
     for i, mod, ct in tqdm(pool.imap_unordered(
-            check_sequence, np.arange(start=range_start, end=range_end, dtype=int)), total=loop_count):
+            check_sequence, np.arange(start=range_start, stop=range_end, dtype=int)), total=loop_count):
         contains_y[mod] = i * ct
         doesnt_contain_y[mod] = (not i) * ct
         contains_all += i
