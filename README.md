@@ -27,4 +27,6 @@ Some current ideas include:
 - Experiment with GPU acceleration?
 
 Pre-generating the fibonacci numbers, unfortunately might not be feasible due to integer limits if I switch to an explicit compiled language.
+For example, in order to generate the period for modulus 10<sup>5</sup>, I need to generate the fibonacci numbers up to around the 350,000th fibonacci number.
+Meanwhile, the 94th fibonacci number is already over the limit of a 64-bit unsigned integer. 
 By sticking to generating the sequence purely for the moduli, I can remain under the integer limit, however this results in generating the sequence for all moduli.
