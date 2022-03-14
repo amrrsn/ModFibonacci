@@ -21,7 +21,7 @@ I recommend using 10k or 1k modulus, as 100k is very large and takes a long time
 # Future Plans
 Currently, the data is generated for all moduli up to 10^5. This took about 6 hours to generate, so to go further, I would likely need to make some major optimizations.
 Some current ideas include:
-- [ ] Implement storing the data in a more efficient way, e.g. using a database.
-- [ ] Pre-generate the fibonacci numbers up to some significant number, say, 10^6 or 10^7.
-- [ ] Switch the generation to a fully compiled language for faster execution and better multithreading support.
-- [ ] Experiment with GPU acceleration?
+- Implement storing the data in a more efficient way, e.g. using a database.
+- Pre-generate the fibonacci numbers up to some significant number, say, 10^6 or 10^7.
+- Switch the generation to a fully compiled language for faster execution and better multithreading support.
+- Experiment with GPU acceleration?
