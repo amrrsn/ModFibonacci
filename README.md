@@ -10,13 +10,13 @@ This could easily be optimized away, but I currently don't intend to go beyond m
 as visualizing the data is already quite lag inducing at this point.
 
 # Visualization
-The data is visualized using either plotly or matplotlib. Pre-generated interactive plotly graphs are included in this repo as follows.
+The data is visualized using either plotly or matplotlib. Pre-generated interactive plotly graphs are included in this repo as follows:
 - [Up to Modulus 100k](./figures/99998/fibonacci_modulus_periods.html)
 - [Up to Modulus 10k](./figures/9998/fibonacci_modulus_periods.html)
 - [Up to Modulus 1k](./figures/998/fibonacci_modulus_periods.html)
 - [Up to Modulus 100](./figures/98/fibonacci_modulus_periods.html)
 
-I recommend using 10k or 1k modulus, as 100k is very large and takes a long time to load while 100 doesn't give much insight.
+I recommend using the 10k or 1k modulus, as 100k is very large and takes a long time to load while 100 doesn't give much insight.
 
 # Future Plans
 Currently, the data is generated for all moduli up to 10<sup>5</sup>. This took about 6 hours to generate, so to go further, I would likely need to make some major optimizations.
