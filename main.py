@@ -33,10 +33,10 @@ def check_sequence(modulus: int) -> (bool, int, int):
     """
     remainders = np.arange(stop=modulus, dtype=int)
 
-    count = 0
+    period_length = 0
     last_digits = [0, 1]
     while True:
-        count += 1
+        period_length += 1
         last_digits = [last_digits[1], (last_digits[0] + last_digits[1]) % modulus]
         if last_digits[1] in remainders:
             remainders = np.delete(remainders, np.where(remainders == last_digits[1]))
@@ -44,17 +44,24 @@ def check_sequence(modulus: int) -> (bool, int, int):
         # optimizes the loop by skipping the rest of the loop if the sequence is found
         # this is because the sequence is found when the remainders array is empty
         # commented out because this case is rare in the long run,
-        # and it is preferable to keep the count consistent for the graph
+        # and it is preferable to keep the period length consistent for the graph
         ###
         # if not remainders.size:
-        #     contains_y[modulus-range_start] = count
+        #     contains_y[modulus-range_start] = period_length
         #     return True
         if last_digits == [0, 1]:
             break
 
     if not remainders.size:
-        return True, modulus, count
-    return False, modulus, count
+        return True, modulus, period_length
+    return False, modulus, period_length
+
+
+###
+#   The variables contains_y/x and doesnt_contain_y/x are used to store the results of the check_sequence function
+#   They are vaguely named, but the contains array is for the case where the sequence contains every remainder modulus,
+#   and the doesnt_contain array is for the case where the sequence does not contain every remainder modulus.
+###
 
 
 if __name__ == '__main__' and not os.path.exists(f"{data_dir}/contains_x_{loop_count}.npy"):
