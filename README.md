@@ -4,7 +4,7 @@ this project both determines the period of these sequences,
 and determines whether the sequence contains every remainder of the modulus operation.
 
 # Data
-In order to save time when generating the figures, the data is stored in a npy files.
+In order to save time when generating the figures, the data is stored in `.npy` files.
 Currently, the data will be generated unless the file containing exactly the same modulus range is found.
 This could easily be optimized away, but I currently don't intend to go beyond modulus 10<sup>5</sup>
 as visualizing the data is already quite lag inducing at this point.
