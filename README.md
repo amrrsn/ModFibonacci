@@ -25,3 +25,6 @@ Some current ideas include:
 - Pre-generate the fibonacci numbers up to some significant number, say, 10^6 or 10^7.
 - Switch the generation to a fully compiled language for faster execution and better multithreading support.
 - Experiment with GPU acceleration?
+
+Pre-generating the fibonacci numbers, unfortunately might not be feasible due to integer limits if I switch to an explicit compiled language.
+By sticking to generating the sequence purely for the moduli, I can remain under the integer limit, however this results in generating the sequence for all moduli.
