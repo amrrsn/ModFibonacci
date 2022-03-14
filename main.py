@@ -25,6 +25,12 @@ plot_type = 'plotly'
 
 
 def check_sequence(modulus: int) -> (bool, int, int):
+    """
+    Generates the periodic sequence of the fibonacci series for a given modulus.
+
+    :param modulus: The modulus to be used in the sequence.
+    :return: Tuples of (bool, int, int) where the first element is a boolean indicating whether the sequence contains every remainder modulus, the second element is the modulus, and the third element is the length of the period.
+    """
     remainders = np.arange(stop=modulus, dtype=int)
 
     count = 0
